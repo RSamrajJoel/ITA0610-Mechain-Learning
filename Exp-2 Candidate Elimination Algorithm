@@ -1,0 +1,41 @@
+import pandas as pd
+
+# Training Data
+data = {
+    "Sky": ["Sunny", "Sunny", "Rainy", "Sunny"],
+    "AirTemp": ["Warm", "Warm", "Cold", "Warm"],
+    "Humidity": ["Normal", "High", "High", "High"],
+    "Wind": ["Strong", "Strong", "Strong", "Strong"],
+    "Water": ["Warm", "Warm", "Warm", "Cool"],
+    "Forecast": ["Same", "Same", "Change", "Change"],
+    "EnjoySport": ["Yes", "Yes", "No", "Yes"]
+}
+
+df = pd.DataFrame(data)
+
+X = df.iloc[:, :-1].values
+Y = df.iloc[:, -1].values
+
+# Initialize Specific Hypothesis
+S = list(X[0])
+
+# Initialize General Hypothesis
+G = [["?" for _ in range(len(S))]]
+
+# Candidate Elimination
+for i in range(len(Y)):
+    if Y[i] == "Yes":
+        for j in range(len(S)):
+            if S[j] != X[i][j]:
+                S[j] = "?"
+    else:
+        for j in range(len(S)):
+            if S[j] != "?":
+                G.append(["?" if k != j else S[j] for k in range(len(S))])
+
+print("Specific Hypothesis:")
+print(S)
+
+print("\nGeneral Hypothesis:")
+for g in G:
+    print(g)
