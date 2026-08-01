@@ -1,0 +1,35 @@
+import pandas as pd
+
+# Training data
+data = [
+    ["Sunny", "Warm", "Normal", "Strong", "Warm", "Same", "Yes"],
+    ["Sunny", "Warm", "High", "Strong", "Warm", "Same", "Yes"],
+    ["Rainy", "Cold", "High", "Strong", "Warm", "Change", "No"],
+    ["Sunny", "Warm", "High", "Strong", "Cool", "Change", "Yes"]
+]
+
+# Create DataFrame
+df = pd.DataFrame(data, columns=[
+    "Sky", "AirTemp", "Humidity", "Wind",
+    "Water", "Forecast", "EnjoySport"
+])
+
+# Separate features and target
+X = df.iloc[:, :-1].values
+Y = df.iloc[:, -1].values
+
+# FIND-S Algorithm
+hypothesis = None
+
+for i in range(len(Y)):
+    if Y[i] == "Yes":
+        if hypothesis is None:
+            hypothesis = X[i].copy()
+        else:
+            for j in range(len(hypothesis)):
+                if hypothesis[j] != X[i][j]:
+                    hypothesis[j] = "?"
+
+# Output
+print("Most Specific Hypothesis:")
+print(hypothesis)
