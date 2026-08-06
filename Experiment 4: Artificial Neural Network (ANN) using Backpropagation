@@ -1,0 +1,72 @@
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.neural_network import MLPClassifier
+
+# -------------------- Dataset --------------------
+
+data = {
+    'CGPA':[9,8,7,6,5,9,8,6,7,5],
+    'Communication':['Excellent','Good','Good','Average','Poor',
+                     'Excellent','Good','Average','Excellent','Poor'],
+    'Internship':['Yes','Yes','Yes','No','No',
+                  'Yes','No','Yes','Yes','No'],
+    'Programming':['Excellent','Good','Average','Average','Poor',
+                   'Good','Good','Average','Good','Average'],
+    'Placement':['Placed','Placed','Placed','Not Placed','Not Placed',
+                 'Placed','Placed','Not Placed','Placed','Not Placed']
+}
+
+df = pd.DataFrame(data)
+
+print("Training Dataset\n")
+print(df)
+
+# ---------------- Encode Data ----------------
+
+le = LabelEncoder()
+
+df['Communication'] = le.fit_transform(df['Communication'])
+df['Internship'] = le.fit_transform(df['Internship'])
+df['Programming'] = le.fit_transform(df['Programming'])
+df['Placement'] = le.fit_transform(df['Placement'])
+
+X = df.iloc[:,0:4]
+y = df['Placement']
+
+# ---------------- Train ANN ----------------
+
+model = MLPClassifier(
+    hidden_layer_sizes=(5,),
+    activation='relu',
+    solver='adam',
+    max_iter=1000,
+    random_state=42
+)
+
+model.fit(X,y)
+
+# -------------- New Sample ----------------
+
+sample = pd.DataFrame({
+    'CGPA':[8],
+    'Communication':['Excellent'],
+    'Internship':['Yes'],
+    'Programming':['Good']
+})
+
+sample['Communication']=le.fit(['Average','Excellent','Good','Poor']).transform(sample['Communication'])
+sample['Internship']=le.fit(['No','Yes']).transform(sample['Internship'])
+sample['Programming']=le.fit(['Average','Excellent','Good','Poor']).transform(sample['Programming'])
+
+prediction=model.predict(sample)
+
+print("\nNew Sample")
+print("CGPA = 8")
+print("Communication = Excellent")
+print("Internship = Yes")
+print("Programming = Good")
+
+if prediction[0]==1:
+    print("\nPrediction : Placed")
+else:
+    print("\nPrediction : Not Placed")
