@@ -1,0 +1,63 @@
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.tree import DecisionTreeClassifier
+
+# Dataset
+data = {
+    'Outlook': ['Sunny','Sunny','Overcast','Rain','Rain','Rain',
+                'Overcast','Sunny','Sunny','Rain','Sunny',
+                'Overcast','Overcast','Rain'],
+
+    'Temperature': ['Hot','Hot','Hot','Mild','Cool','Cool',
+                    'Cool','Mild','Cool','Mild','Mild',
+                    'Mild','Hot','Mild'],
+
+    'Humidity': ['High','High','High','High','Normal','Normal',
+                 'Normal','High','Normal','Normal','Normal',
+                 'High','Normal','High'],
+
+    'Wind': ['Weak','Strong','Weak','Weak','Weak','Strong',
+             'Strong','Weak','Weak','Weak','Strong',
+             'Strong','Weak','Strong'],
+
+    'PlayTennis': ['No','No','Yes','Yes','Yes','No',
+                   'Yes','No','Yes','Yes','Yes',
+                   'Yes','Yes','No']
+}
+
+df = pd.DataFrame(data)
+
+# Encode categorical values
+le = LabelEncoder()
+
+X = df.iloc[:, :-1].apply(le.fit_transform)
+y = df['PlayTennis']
+
+# Train ID3 Decision Tree
+model = DecisionTreeClassifier(criterion="entropy", random_state=0)
+model.fit(X, y)
+
+print("Training Dataset\n")
+print(df)
+
+# New Sample
+sample = pd.DataFrame({
+    'Outlook':['Sunny'],
+    'Temperature':['Cool'],
+    'Humidity':['High'],
+    'Wind':['Weak']
+})
+
+# Encode sample using same mappings
+sample['Outlook'] = le.fit(df['Outlook']).transform(sample['Outlook'])
+sample['Temperature'] = le.fit(df['Temperature']).transform(sample['Temperature'])
+sample['Humidity'] = le.fit(df['Humidity']).transform(sample['Humidity'])
+sample['Wind'] = le.fit(df['Wind']).transform(sample['Wind'])
+
+prediction = model.predict(sample)
+
+print("\nNew Sample")
+print("Sunny Cool High Weak")
+
+print("\nPrediction:")
+print("Play Tennis =", prediction[0])
