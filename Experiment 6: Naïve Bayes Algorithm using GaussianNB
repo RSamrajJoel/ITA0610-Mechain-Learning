@@ -1,0 +1,55 @@
+# Experiment 6 - Naive Bayes Algorithm
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+# ---------------- Dataset ----------------
+
+data = {
+    'CGPA':[9.1,8.8,8.2,7.0,6.5,9.3,7.4,8.7,6.8,9.0],
+    'Aptitude':[90,85,82,70,65,92,72,86,67,89],
+    'Communication':[88,84,80,68,60,90,70,83,65,87],
+    'Placement':['Placed','Placed','Placed','Not Placed','Not Placed',
+                 'Placed','Not Placed','Placed','Not Placed','Placed']
+}
+
+df = pd.DataFrame(data)
+
+print("Training Dataset\n")
+print(df)
+
+# ---------------- Features ----------------
+
+X = df[['CGPA','Aptitude','Communication']]
+y = df['Placement']
+
+# ---------------- Split Dataset ----------------
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42
+)
+
+# ---------------- Train Model ----------------
+
+model = GaussianNB()
+model.fit(X_train, y_train)
+
+# ---------------- Prediction ----------------
+
+y_pred = model.predict(X_test)
+
+# ---------------- Results ----------------
+
+print("\nActual Output")
+print(list(y_test))
+
+print("\nPredicted Output")
+print(list(y_pred))
+
+print("\nConfusion Matrix")
+print(confusion_matrix(y_test, y_pred))
+
+print("\nAccuracy")
+print(accuracy_score(y_test, y_pred))
