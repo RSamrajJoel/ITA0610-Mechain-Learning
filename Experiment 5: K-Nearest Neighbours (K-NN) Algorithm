@@ -1,0 +1,42 @@
+# Experiment 5 - K-Nearest Neighbours (KNN)
+
+import pandas as pd
+from sklearn.neighbors import KNeighborsClassifier
+
+# ---------------- Dataset ----------------
+
+data = {
+    'CGPA':[9.2,8.8,8.5,7.2,6.8,9.0,7.5,8.6,6.5,8.9],
+    'Aptitude':[90,85,80,72,68,92,75,84,60,88],
+    'Communication':[88,82,79,70,65,90,74,81,58,86],
+    'Placement':['Placed','Placed','Placed','Not Placed','Not Placed',
+                 'Placed','Not Placed','Placed','Not Placed','Placed']
+}
+
+df = pd.DataFrame(data)
+
+print("Training Dataset\n")
+print(df)
+
+# ---------------- Features ----------------
+
+X = df[['CGPA','Aptitude','Communication']]
+y = df['Placement']
+
+# ---------------- Model ----------------
+
+model = KNeighborsClassifier(n_neighbors=3)
+model.fit(X, y)
+
+# ---------------- New Sample ----------------
+
+sample = [[8.7,86,84]]
+
+prediction = model.predict(sample)
+
+print("\nNew Sample")
+print("CGPA = 8.7")
+print("Aptitude Score = 86")
+print("Communication Score = 84")
+
+print("\nPrediction :", prediction[0])
