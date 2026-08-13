@@ -1,0 +1,49 @@
+# Experiment 14: House Price Prediction
+# Algorithm: Linear Regression
+
+from sklearn.linear_model import LinearRegression
+
+# Dataset
+X = [
+    [800, 2, 15],
+    [1000, 2, 12],
+    [1200, 3, 10],
+    [1400, 3, 8],
+    [1600, 4, 6],
+    [1800, 4, 5],
+    [2000, 5, 4],
+    [2200, 5, 3],
+    [2400, 6, 2],
+    [2600, 6, 1]
+]
+
+y = [35, 42, 52, 63, 75,
+     88, 102, 118, 135, 150]
+
+# Create and train model
+model = LinearRegression()
+model.fit(X, y)
+
+# New house
+new_house = [[1700, 4, 5]]
+
+# Prediction
+prediction = model.predict(new_house)
+
+# Display result
+print("=" * 45)
+print("       HOUSE PRICE PREDICTION")
+print("         LINEAR REGRESSION")
+print("=" * 45)
+
+print("\nNew House Details")
+print("House Size    : 1700 sq.ft")
+print("Bedrooms      : 4")
+print("House Age     : 5 Years")
+
+print("\nPredicted House Price : ₹{:.2f} Lakhs"
+      .format(prediction[0]))
+
+print("\n" + "=" * 45)
+print("Prediction Completed Successfully")
+print("=" * 45)
