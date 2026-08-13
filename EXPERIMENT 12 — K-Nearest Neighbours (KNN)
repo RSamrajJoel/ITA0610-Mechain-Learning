@@ -1,0 +1,99 @@
+# Experiment 12: K-Nearest Neighbours (KNN)
+# Dataset: Fruit Classification
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# ---------------------------------
+# Dataset
+# ---------------------------------
+
+X = [
+    [150, 7.5, 90],
+    [160, 7.8, 88],
+    [145, 7.3, 91],
+    [120, 5.5, 70],
+    [125, 5.8, 72],
+    [130, 6.0, 74],
+    [155, 7.6, 89],
+    [118, 5.4, 69],
+    [148, 7.4, 92],
+    [122, 5.7, 71]
+]
+
+y = [
+    "Apple",
+    "Apple",
+    "Apple",
+    "Orange",
+    "Orange",
+    "Orange",
+    "Apple",
+    "Orange",
+    "Apple",
+    "Orange"
+]
+
+# ---------------------------------
+# Split Dataset
+# ---------------------------------
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.3,
+    random_state=42
+)
+
+# ---------------------------------
+# Create KNN Model
+# ---------------------------------
+
+model = KNeighborsClassifier(n_neighbors=3)
+
+# Train model
+model.fit(X_train, y_train)
+
+# ---------------------------------
+# Test Model
+# ---------------------------------
+
+y_pred = model.predict(X_test)
+
+accuracy = accuracy_score(y_test, y_pred)
+
+# ---------------------------------
+# New Sample Prediction
+# ---------------------------------
+
+new_fruit = [[152, 7.5, 90]]
+
+prediction = model.predict(new_fruit)
+
+# ---------------------------------
+# Display Results
+# ---------------------------------
+
+print("======================================")
+print("       FRUIT CLASSIFICATION")
+print("        USING KNN ALGORITHM")
+print("======================================")
+
+print("\nModel Parameters:")
+print("K Value = 3")
+
+print("\nTest Accuracy:")
+print(f"{accuracy * 100:.2f}%")
+
+print("\nNew Fruit Details:")
+print("Weight     : 152 g")
+print("Diameter   : 7.5 cm")
+print("Sweetness  : 90%")
+
+print("\nPredicted Fruit:")
+print(prediction[0])
+
+print("\n======================================")
+print("KNN Classification Completed")
+print("======================================")
