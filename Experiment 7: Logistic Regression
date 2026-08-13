@@ -1,0 +1,63 @@
+# Experiment 7 - Logistic Regression
+# Student Placement Dataset
+
+from sklearn.linear_model import LogisticRegression
+
+# Dataset
+data = [
+    ['High', 'Good', 'Yes', 'Good', 1],
+    ['High', 'Excellent', 'Yes', 'Excellent', 1],
+    ['Medium', 'Good', 'Yes', 'Good', 1],
+    ['Medium', 'Average', 'No', 'Average', 0],
+    ['Low', 'Poor', 'No', 'Poor', 0],
+    ['High', 'Good', 'No', 'Good', 1],
+    ['Low', 'Average', 'No', 'Average', 0],
+    ['Medium', 'Good', 'Yes', 'Excellent', 1],
+    ['High', 'Excellent', 'Yes', 'Good', 1],
+    ['Low', 'Poor', 'Yes', 'Average', 0]
+]
+
+# Convert categorical values to numbers
+cgpa = {'Low': 0, 'Medium': 1, 'High': 2}
+communication = {'Poor': 0, 'Average': 1, 'Good': 2, 'Excellent': 3}
+internship = {'No': 0, 'Yes': 1}
+programming = {'Poor': 0, 'Average': 1, 'Good': 2, 'Excellent': 3}
+
+X = []
+y = []
+
+for row in data:
+    X.append([
+        cgpa[row[0]],
+        communication[row[1]],
+        internship[row[2]],
+        programming[row[3]]
+    ])
+    y.append(row[4])
+
+# Train Logistic Regression model
+model = LogisticRegression()
+model.fit(X, y)
+
+# New sample from the PDF
+new_sample = [[
+    cgpa['High'],
+    communication['Good'],
+    internship['Yes'],
+    programming['Excellent']
+]]
+
+# Prediction
+prediction = model.predict(new_sample)
+
+print("Student Placement Prediction")
+print("----------------------------")
+print("CGPA          : High")
+print("Communication : Good")
+print("Internship    : Yes")
+print("Programming   : Excellent")
+
+if prediction[0] == 1:
+    print("Prediction    : Yes - Placed")
+else:
+    print("Prediction    : No - Not Placed")
