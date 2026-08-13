@@ -1,0 +1,58 @@
+# Experiment 15: Fruit Classification
+# Algorithm: Naive Bayes (GaussianNB)
+
+from sklearn.naive_bayes import GaussianNB
+
+# Dataset
+X = [
+    [150, 7.5, 90],
+    [160, 7.8, 88],
+    [145, 7.3, 91],
+    [120, 5.5, 70],
+    [125, 5.8, 72],
+    [130, 6.0, 74],
+    [155, 7.6, 89],
+    [118, 5.4, 69],
+    [148, 7.4, 92],
+    [122, 5.7, 71]
+]
+
+y = [
+    "Apple",
+    "Apple",
+    "Apple",
+    "Orange",
+    "Orange",
+    "Orange",
+    "Apple",
+    "Orange",
+    "Apple",
+    "Orange"
+]
+
+# Create and train Naive Bayes model
+model = GaussianNB()
+model.fit(X, y)
+
+# New fruit
+new_fruit = [[152, 7.5, 90]]
+
+# Prediction
+prediction = model.predict(new_fruit)
+
+# Display result
+print("=" * 45)
+print("       FRUIT CLASSIFICATION")
+print("        NAIVE BAYES MODEL")
+print("=" * 45)
+
+print("\nNew Fruit Details")
+print("Weight       : 152 g")
+print("Diameter     : 7.5 cm")
+print("Sweetness    : 90%")
+
+print("\nPredicted Fruit :", prediction[0])
+
+print("\n" + "=" * 45)
+print("Classification Completed Successfully")
+print("=" * 45)
