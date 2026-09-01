@@ -1,0 +1,78 @@
+# ==========================================================
+# EXPERIMENT 19
+# Bank Loan Approval using Naive Bayes
+# Algorithm: Gaussian Naive Bayes
+# Dataset: Personal Loan Approval
+# ==========================================================
+
+from sklearn.naive_bayes import GaussianNB
+
+# ----------------------------------------------------------
+# 1. Dataset
+# ----------------------------------------------------------
+
+X = [
+    [12, 820, 5],
+    [10, 790, 6],
+    [9, 760, 7],
+    [7, 700, 8],
+    [6, 680, 9],
+    [5, 650, 10],
+    [4, 620, 12],
+    [8, 730, 8],
+    [3, 600, 13],
+    [11, 810, 5]
+]
+
+y = [
+    "Approved",
+    "Approved",
+    "Approved",
+    "Approved",
+    "Rejected",
+    "Rejected",
+    "Rejected",
+    "Approved",
+    "Rejected",
+    "Approved"
+]
+
+# ----------------------------------------------------------
+# 2. Create and Train Naive Bayes Model
+# ----------------------------------------------------------
+
+model = GaussianNB()
+
+model.fit(X, y)
+
+# ----------------------------------------------------------
+# 3. New Loan Application
+# ----------------------------------------------------------
+
+new_sample = [[9, 770, 6]]
+
+# ----------------------------------------------------------
+# 4. Predict Loan Status
+# ----------------------------------------------------------
+
+prediction = model.predict(new_sample)
+
+# ----------------------------------------------------------
+# 5. Display Result
+# ----------------------------------------------------------
+
+print("=" * 55)
+print("          BANK LOAN APPROVAL")
+print("           NAIVE BAYES MODEL")
+print("=" * 55)
+
+print("\nLoan Applicant Details")
+print("Annual Income : 9 Lakhs")
+print("Credit Score  : 770")
+print("Loan Amount   : 6 Lakhs")
+
+print("\nPredicted Loan Status :", prediction[0])
+
+print("\n" + "=" * 55)
+print("Loan Prediction Completed Successfully")
+print("=" * 55)
