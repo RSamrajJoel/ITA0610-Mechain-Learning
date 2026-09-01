@@ -1,0 +1,135 @@
+# ==========================================================
+# EXPERIMENT 16
+# Comparison of Classification Algorithms
+# Algorithms: Decision Tree and KNN
+# Dataset: Student Placement Prediction
+# ==========================================================
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# ----------------------------------------------------------
+# 1. Dataset
+# ----------------------------------------------------------
+
+X = [
+    [9.2, 90, 88],
+    [8.8, 85, 82],
+    [8.5, 80, 79],
+    [7.2, 72, 70],
+    [6.8, 68, 65],
+    [9.0, 92, 90],
+    [7.5, 75, 74],
+    [8.6, 84, 81],
+    [6.5, 60, 58],
+    [8.9, 88, 86]
+]
+
+y = [
+    "Placed",
+    "Placed",
+    "Placed",
+    "Not Placed",
+    "Not Placed",
+    "Placed",
+    "Not Placed",
+    "Placed",
+    "Not Placed",
+    "Placed"
+]
+
+# ----------------------------------------------------------
+# 2. Split Dataset
+# ----------------------------------------------------------
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.3,
+    random_state=42
+)
+
+# ----------------------------------------------------------
+# 3. Decision Tree Model
+# ----------------------------------------------------------
+
+decision_tree = DecisionTreeClassifier(
+    random_state=42
+)
+
+decision_tree.fit(X_train, y_train)
+
+dt_prediction = decision_tree.predict(X_test)
+
+dt_accuracy = accuracy_score(
+    y_test,
+    dt_prediction
+)
+
+# ----------------------------------------------------------
+# 4. KNN Model
+# ----------------------------------------------------------
+
+knn = KNeighborsClassifier(
+    n_neighbors=3
+)
+
+knn.fit(X_train, y_train)
+
+knn_prediction = knn.predict(X_test)
+
+knn_accuracy = accuracy_score(
+    y_test,
+    knn_prediction
+)
+
+# ----------------------------------------------------------
+# 5. New Sample Prediction
+# ----------------------------------------------------------
+
+new_student = [[8.7, 86, 84]]
+
+dt_new_prediction = decision_tree.predict(new_student)
+knn_new_prediction = knn.predict(new_student)
+
+# ----------------------------------------------------------
+# 6. Display Results
+# ----------------------------------------------------------
+
+print("=" * 55)
+print("     CLASSIFICATION ALGORITHM COMPARISON")
+print("=" * 55)
+
+print("\nDataset: Student Placement Prediction")
+
+print("\nDecision Tree Accuracy : {:.2f}%"
+      .format(dt_accuracy * 100))
+
+print("KNN Accuracy           : {:.2f}%"
+      .format(knn_accuracy * 100))
+
+print("\nNew Student Details")
+print("CGPA          : 8.7")
+print("Aptitude      : 86")
+print("Communication : 84")
+
+print("\nDecision Tree Prediction :",
+      dt_new_prediction[0])
+
+print("KNN Prediction           :",
+      knn_new_prediction[0])
+
+print("\nPerformance Comparison")
+
+if dt_accuracy > knn_accuracy:
+    print("Decision Tree performed better.")
+elif knn_accuracy > dt_accuracy:
+    print("KNN performed better.")
+else:
+    print("Both algorithms achieved the same accuracy.")
+
+print("\n" + "=" * 55)
+print("Experiment Completed Successfully")
+print("=" * 55)
